@@ -1,0 +1,24 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+opencv-python = "*"
+mss = "*"
+PyAutoGUI = "*"
+PyYAML = "*"
+simpleaudio = "*"
+requests = "*"
+torch = "*"
+tqdm = "*"
+torchvision = "*"
+matplotlib = "*"
+pandas = "*"
+seaborn = "*"
+pytesseract = "*"
+
+[dev-packages]
+
+[requires]
+python_version = "3.9"

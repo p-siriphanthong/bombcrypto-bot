@@ -136,9 +136,9 @@ def getSliderPositions(screenshot, popup_pos):
         return None
     (start_x, start_y) = slider
 
-    pyautogui.moveTo(start_x,start_y+randint(0,10),1)
+    pyautogui.moveTo(start_x/2,(start_y+randint(0,10))/2,1)
     pyautogui.mouseDown()
-    pyautogui.moveTo(start_x+400,start_y+randint(0,10),1)
+    pyautogui.moveTo((start_x+400)/2,(start_y+randint(0,10))/2,1)
 
     screenshot = printSreen()
 
@@ -152,7 +152,7 @@ def getSliderPositions(screenshot, popup_pos):
 
     positions = []
     for i in range(5):
-        # pyautogui.moveTo(start_x+increment*pos ,start_y+randint(0,10),1)
+        # pyautogui.moveTo((start_x+increment*pos)/2 ,(start_y+randint(0,10))/2,1)
         positions.append((start_x+increment*i ,start_y+randint(0,10)))
         # screenshot = printSreen()
         # time.sleep(2)
@@ -178,7 +178,7 @@ def solveCaptcha():
 
     for position in slider_positions:
         x, y = position
-        pyautogui.moveTo(x,y,1)
+        pyautogui.moveTo(x/2,y/2,1)
         screenshot = printSreen()
         popup_pos = positions(d['robot'],img=screenshot)
         captcha_img = captchaImg(screenshot, popup_pos[0])

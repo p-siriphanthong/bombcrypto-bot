@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-    
 from cv2 import cv2
 
-from captcha.solveCaptcha import solveCaptcha
+from captcha.revealNumber import solveCaptcha as _solveCaptcha
 
 from os import listdir
 from src.logger import logger, loggerMapClicked
@@ -15,6 +15,7 @@ import time
 import sys
 
 import yaml
+import requests
 
 
 cat = """
@@ -66,7 +67,18 @@ hero_clicks = 0
 login_attempts = 0
 last_log_is_progress = False
 
+def solveCaptcha():
+    pyautogui.PAUSE = 0.1
+    _solveCaptcha()
+    pyautogui.PAUSE = c['time_intervals']['interval_between_moviments']
 
+def lineNotify(message):
+    url = 'https://notify-api.line.me/api/notify'
+    token = ''
+    headers = {'content-type': 'application/x-www-form-urlencoded',
+               'Authorization': 'Bearer '+token}
+
+    requests.post(url, headers=headers, data={'message': message})
 
 def addRandomness(n, randomn_factor_size=None):
     if randomn_factor_size is None:
@@ -82,7 +94,7 @@ def addRandomness(n, randomn_factor_size=None):
     return int(randomized_n)
 
 def moveToWithRandomness(x,y,t):
-    pyautogui.moveTo(addRandomness(x,10),addRandomness(y,10),t+random()/2)
+    pyautogui.moveTo(addRandomness(x,10)/2,addRandomness(y,10)/2,t+random()/2)
 
 
 def remove_suffix(input_string, suffix):
@@ -133,7 +145,6 @@ robot = cv2.imread('targets/robot.png')
 # puzzle_img = cv2.imread('targets/puzzle.png')
 # piece = cv2.imread('targets/piece.png')
 slider = cv2.imread('targets/slider.png')
-
 
 
 def show(rectangles, img = None):
@@ -219,9 +230,9 @@ def scroll():
     moveToWithRandomness(x,y,1)
 
     if not c['use_click_and_drag_instead_of_scroll']:
-        pyautogui.scroll(-c['scroll_size'])
+        pyautogui.scroll(-c['scroll_size']/2)
     else:
-        pyautogui.dragRel(0,-c['click_and_drag_amount'],duration=1, button='left')
+        pyautogui.dragRel(0,-c['click_and_drag_amount']/2,duration=1, button='left')
 
 
 def clickButtons():
@@ -347,7 +358,7 @@ def login():
     if login_attempts > 3:
         logger('🔃 Too many login attempts, refreshing')
         login_attempts = 0
-        pyautogui.hotkey('ctrl','f5')
+        pyautogui.hotkey('command', 'r')
         return
 
     if clickBtn(images['connect-wallet'], name='connectWalletBtn', timeout = 10):

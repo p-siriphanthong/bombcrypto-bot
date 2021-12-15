@@ -116,9 +116,9 @@ def moveSlider(screenshot, pos, popup_pos):
         exit()
     (start_x, start_y) = slider
 
-    pyautogui.moveTo(start_x,start_y+randint(0,10),1)
+    pyautogui.moveTo(start_x/2,(start_y+randint(0,10))/2,1)
     pyautogui.mouseDown()
-    pyautogui.moveTo(start_x+400,start_y+randint(0,10),1)
+    pyautogui.moveTo((start_x+400)/2,(start_y+randint(0,10))/2,1)
 
     screenshot = printSreen()
 
@@ -130,7 +130,7 @@ def moveSlider(screenshot, pos, popup_pos):
 
     increment = size/4
 
-    pyautogui.moveTo(start_x+increment*pos ,start_y+randint(0,10),1)
+    pyautogui.moveTo((start_x+increment*pos)/2 ,(start_y+randint(0,10))/2,1)
     choice_images = []
     for i in range(5):
         choice_images.append(captchaImg(printSreen(),popup_pos[0]))
@@ -174,7 +174,7 @@ def main():
             time.sleep(3)
             return
         (connect_x, connect_y) = connect_wallet
-        pyautogui.moveTo(connect_x+randint(0,10),connect_y+randint(0,10),1)
+        pyautogui.moveTo((connect_x+randint(0,10))/2,(connect_y+randint(0,10))/2,1)
         pyautogui.click()
         time.sleep(1)
         print('connect wallet')
